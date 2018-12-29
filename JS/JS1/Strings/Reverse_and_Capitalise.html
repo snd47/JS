@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reverse and Capitalise</title>
+</head>
+<body>
+<script>
+// Задание
+// Создать функции для:
+//  1. Реверса строки
+//  2. Замены первой буквы строки на заглавную
+//  3. Замены первой буквы, каждого слова в строке на заглавную
+
+
+//  реверс строки
+        var makeReverse = function(rtr) {
+            return rtr.split('').reverse().join('');
+        };
+//  первая заглавная буква
+        var capitaliseFirst = function(rR) {
+            return rR[0].toUpperCase() + rR.substring(1);
+        };
+// все слова с заглавной
+        var capitaliseAllFirst = function(rRR) {
+            let r = rRR[0].toUpperCase() + rRR.substring(1);
+            r=r.split('');            // меняем на массив, т.к. строку нельзя менять, можно только переприсвоить
+            for (let i=1; i<r.length; i++) {
+                if (r[i-1] == ' ') {        //  если перед началом слова пробел меняем букву на большую
+                    r[i] = r[i].toUpperCase();
+                     // console.log(r[i]);
+                }
+            }
+            return r.join('');
+        };
+
+    console.log(makeReverse('sobaka'));
+    console.log(capitaliseFirst('sobaka'));
+    console.log(capitaliseAllFirst('sobaka idet lesom'));
+
+</script>
+</body>
+</html>
