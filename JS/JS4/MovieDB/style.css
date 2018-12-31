@@ -1,0 +1,66 @@
+body {
+    margin-top: 10px;
+    /*background-color: azure;*/
+}
+
+.headerSearchName {
+    font-size: 18px;
+    text-align: right;
+}
+
+#searchList {
+    /*position: absolute;*/
+    /*background: #d7d7d7;*/
+    /*opacity: 0.5;*/
+    position: absolute;
+    background-color: rgba(52,58,64,.7);
+    color: azure;
+    z-index: 10;
+
+}
+
+#searchMovie {
+    /*position: absolute;*/
+    /*margin-top: 20px;*/
+    background: #d7b8b5;
+}
+
+/*#movieList {*/
+    /*margin-top: 100px;*/
+    /*background: #d7d7d7;*/
+/*}*/
+.itemList {
+
+}
+
+.poster {
+    width: 100%;
+
+}
+
+.card-body {
+    max-height: 220px;
+    overflow: hidden;
+}
+
+.movie-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+    margin-bottom: 25px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 15px;
+}
+.suggests-component {
+    /*position: absolute;*/
+    list-style: none;
+    /*color: #fff;*/
+    /*background-color: rgba(52,58,64,.7);*/
+    width: 100%;
+    top: 65px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 15px 0 0 10px;
+}
+
+
