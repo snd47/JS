@@ -1,7 +1,7 @@
 //Storage
 var storage = {
     movieList: []
-}
+};
 //Search API
 
 function searchMovie () {
@@ -11,7 +11,7 @@ function searchMovie () {
             method: 'GET'
         }
     ).then(function(res) { return res.json()})
-};
+}
 ///movie/top_rated API
 
 // -------------------------- Sarch Movies ---------------------------------------------------------
@@ -19,29 +19,29 @@ let input = document.getElementById('searchMovie');
 
 input.oninput = function() {
     clearSearch('searchList')
-       searchMovie()
+    searchMovie()
         .then(function(res) {
             console.log(res)
             storage.movieList = res.results
             searchList.appendChild(MovieList())
         })
-    };
+};
 
 
 function clearSearch(el){
     document.getElementById(el).innerHTML = "";
-};
+}
 
 function MovieList () {
-    var div = document.createElement('div')
-    div.className = 'MovieList'
+    var div = document.createElement('div');
+    div.className = 'MovieList';
     if (input.value) {
         storage.movieList.forEach(function (item) {
             div.appendChild(ItemMovieFromList(item));
         })
     }
     return div
-};
+}
 
 
 function ItemMovieFromList(data) {
@@ -51,7 +51,7 @@ function ItemMovieFromList(data) {
     var searchListLi = document.createElement('li');
 
 
-    var aSearch = document.createElement('a')
+    var aSearch = document.createElement('a');
 
 
 
@@ -62,13 +62,13 @@ function ItemMovieFromList(data) {
 
 
 
-    aSearch.className = 'ItemMovieFromSearchList'
-    aSearch.innerText = data.title
+    aSearch.className = 'ItemMovieFromSearchList';
+    aSearch.innerText = data.title;
 
 
-    searchList.appendChild(searchListUl)
-    searchListUl.appendChild(aSearch)
-    aSearch.appendChild(searchListLi)
+    searchList.appendChild(searchListUl);
+    searchListUl.appendChild(aSearch);
+    aSearch.appendChild(searchListLi);
 
 
     return searchList
