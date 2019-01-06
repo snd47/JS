@@ -23,16 +23,16 @@
             </div>
 
 
-    </div>
+        </div>
     </div>
 </header>
 <!--список фильмов -->
-    <div class="container" id="listM">
+<div class="container" id="listM">
 
-        <div class="row" id="articleList">
+    <div class="row" id="articleList">
 
-        </div>
     </div>
+</div>
 
 <!--фильм -->
 
@@ -40,13 +40,23 @@
     <div class="overflow">
         <div class="container" >
 
-                <div class="row" id="movie">
+            <div class="row" id="movie">
 
-
-                </div>
+            </div>
+            <div class = "rating">
+                <svg class="score" width="80" height="80" viewBox="-25 -25 450 400">
+                    <circle class="score-empty" cx="175" cy="175" r="175" stroke-width="55" fill="none"></circle>
+                    <circle id="js-circle" class="js-circle score-circle" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" stroke-dasharray="1100" stroke-width="60" stroke-dashoffset="1100" fill="none" style="stroke-dashoffset: 33;"></circle>
+                    <text id = "score-rating" class="js-text score-text" x="50%" y="53%" dx="-25" text-anchor="middle"></text>
+                </svg>
+            </div>
         </div>
-</div></div>
-        <script src ="header.js"></script>
-        <script src ="main.js"></script>
+
+    </div>
+
+</div>
+
+<!--<script src ="header.js"></script>-->
+<script src ="main.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ header {
 .headerSearchName {
     font-size: 18px;
     text-align: right;
+    color: #f0f8ff;
 }
 
 #listM {
@@ -30,9 +31,7 @@ header {
     z-index: 10;
 
 }
-.headerSearchName {
-    color: #f0f8ff;
-}
+
 #searchMovie {
     /*position: absolute;*/
     /*margin-top: 20px;*/
@@ -95,4 +94,37 @@ header {
     width: 100%;
 }
 
+.icons {
+    margin: 0px 0px 30px 100px;
+    height: 100px;
+}
 
+.rating {
+    width: 70px;
+    position: absolute;
+    top: 220px;
+    left: 41%;
+}
+.ratingText {
+    margin-top: 30px;
+    width:100px;
+    font-weight: 700;
+    font-size: smaller;
+}
+.score-circle {
+    stroke: #17a2b8;
+    transition: stroke-dashoffset 1s ease-out
+}
+.score-empty {
+    stroke: #081c24
+}
+.score-text {
+    fill: #f0f8ff!important;
+    font: bold 4rem "Poppins", Helvetica, Arial, sans-serif;
+    font-size: 7em;
+}
+.genre {
+    margin-right: 15px;
+    font-size: 16px;
+    color: #f0f8ff!important;
+}
