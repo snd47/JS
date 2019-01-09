@@ -22,8 +22,12 @@ header {
 
     margin-top: 134px
 }
-.poster {
+.imgDiv {
     width: 100%;
+}
+
+img.poster {
+
 
 }
 .overlayPoster{

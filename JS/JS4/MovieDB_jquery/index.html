@@ -7,19 +7,9 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script>
-        if(window.ActiveXObject || "ActiveXObject" in window){
-            //always true in IE
-            /*
-            document.write('<script src="https://www.promisejs.org/polyfills/promise-6.1.0.min.js"><\/script>');
-            */
-            var script=document.createElement('script');
-            script.src = "https://www.promisejs.org/polyfills/promise-6.1.0.min.js";
-            document.documentElement.children[0].appendChild(script);
-        }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
+
 <body>
 <header>
     <div class="container">
@@ -44,10 +34,11 @@
 <div class="loader">
 <img src="img/loading.gif">
 </div>
+
 <div class="container" id="listM">
-
-
+    <!--собираем в этот div все объекты-фильмы-->
 </div>
+
 <div id="message"></div>
 <ul id="pagination"></ul>
 <!--фильм -->
@@ -55,8 +46,6 @@
 
 
 <!--<script src ="header.js"></script>-->
-
-
 <!--<script src ="dist/main1.js"></script>-->
 <script src ="mainj.js"></script>
 </body>
