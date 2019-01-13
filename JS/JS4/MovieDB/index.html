@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Task2</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
     <div class="container">
         <div class="row my-4">
-            <div class="col-7 headerSearchName">
+            <div class="col-md-7 headerSearchName">
                 Поиск фильмов по названию
             </div>
-            <div class="col-5">
+            <div class="col-md-5">
                 <div class="input-group mb-3">
                     <input id="searchMovie" class="form-control" type="text" name = 'keyword-input' value = ''/>
                 </div>
@@ -43,13 +46,13 @@
             <div class="row" id="movie">
 
             </div>
-            <div class = "rating">
-                <svg class="score" width="80" height="80" viewBox="-25 -25 450 400">
-                    <circle class="score-empty" cx="175" cy="175" r="175" stroke-width="55" fill="none"></circle>
-                    <circle id="js-circle" class="js-circle score-circle" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" stroke-dasharray="1100" stroke-width="60" stroke-dashoffset="1100" fill="none" style="stroke-dashoffset: 33;"></circle>
-                    <text id = "score-rating" class="js-text score-text" x="50%" y="53%" dx="-25" text-anchor="middle"></text>
-                </svg>
-            </div>
+            <!--<div class = "rating">-->
+                <!--<svg class="score" width="80" height="80" viewBox="-25 -25 450 400">-->
+                    <!--<circle class="score-empty" cx="175" cy="175" r="175" stroke-width="55" fill="none"></circle>-->
+                    <!--<circle id="js-circle" class="js-circle score-circle" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" stroke-dasharray="1100" stroke-width="60" stroke-dashoffset="1100" fill="none" style="stroke-dashoffset: 33;"></circle>-->
+                    <!--<text id = "score-rating" class="js-text score-text" x="50%" y="53%" dx="-25" text-anchor="middle"></text>-->
+                <!--</svg>-->
+            <!--</div>-->
         </div>
 
     </div>
@@ -60,3 +63,7 @@
 <script src ="main.js"></script>
 </body>
 </html>
+
+
+
+

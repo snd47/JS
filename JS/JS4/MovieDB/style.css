@@ -11,6 +11,12 @@ header {
     z-index: 999;
     height: 100px;
 }
+
+
+.displayBlock {
+    display:block;
+}
+
 .headerSearchName {
     font-size: 18px;
     text-align: right;
@@ -80,6 +86,7 @@ header {
     margin-top:100px;
 }
 
+
 #movie {
    color: #f0f8ff;
 }
@@ -93,36 +100,57 @@ header {
 .imgAboutSrc {
     width: 100%;
 }
+.displayNone {
+    display:none;
+}
 
 .icons {
-    margin: 0px 0px 30px 100px;
+    margin: 0px 0px 0px 30px;
     height: 100px;
 }
-
+ /*+++++++++++++++++++++++++ SVG+++++++++++++++++*/
 .rating {
     width: 70px;
-    position: absolute;
-    top: 220px;
-    left: 41%;
+    float: left;
 }
 .ratingText {
-    margin-top: 30px;
+    margin: 20px 0px 30px 30px;
     width:100px;
     font-weight: 700;
     font-size: smaller;
+    float: left;
 }
+.score {
+    width:80px;
+    height:80px;
+}
+
 .score-circle {
     stroke: #17a2b8;
-    transition: stroke-dashoffset 1s ease-out
+    transition: stroke-dashoffset 1s ease-out;
 }
 .score-empty {
-    stroke: #081c24
+    stroke: #081c24;
+    stroke-width: 55px;
+    fill: none;
+}
+#js-circle{
+    /*transform: rotate(-90deg);*/
+    /*transform-origin: 38% 42%;*/
+    stroke-width: 55px;
+    stroke-dasharray: 1100px;
+    stroke-dashoffset: 1100px;
+    fill: none;
+    /*stroke-dashoffset: 33px;*/
+
 }
 .score-text {
     fill: #f0f8ff!important;
     font: bold 4rem "Poppins", Helvetica, Arial, sans-serif;
     font-size: 7em;
 }
+
+/*+++++++++++++++++++++++++ END SVG+++++++++++++++++*/
 .genre {
     margin-right: 15px;
     font-size: 16px;
