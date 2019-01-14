@@ -4,14 +4,15 @@
 var storage = {
     url: "https://api.themoviedb.org/3/",
     key: '?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US',
-    ArticleList: [],
+    imgUrl: "https://image.tmdb.org/t/p/w500/",
+    ArticleList: [],         // Список фильмов для стартовой страницы, data.result
     total_pages: '',
-    current_page: 1,
+    current_page: 1,         // infinity scroll
     articleListLength: '',
-    limit: 10,
-    movieList: [],
-    movieIdClicked: '',
-    movieItem: {},
+    limit: 10,               // предел для infinity scroll
+    movieList: [],          // список фильмов для поиска
+    movieIdClicked: '',     // id фильма для moreInfo, заполняем при нажатии на button
+    movieItem: {},          // данные о конкретном фильме, которые в ответе на запрос с id фильма
     list: document.getElementById('listM'),
     movieBackground: document.getElementById('movieBackground')
 };
@@ -24,9 +25,12 @@ var storage = {
             CallAPI('movie/top_rated', '&page='+ storage.current_page, movieGrid, errorFunc);
         // }
     });
+// ------------------------- --------------------------------------------------------------------------------------
 
 
-    $(window).scroll(function() {
+
+
+$(window).scroll(function() {
         var d = document.documentElement;
         var offset = d.scrollTop + window.innerHeight;
         var height = d.offsetHeight;
@@ -57,7 +61,7 @@ var storage = {
         });
     }
 
-    function movieGrid(data) {  // специальная ф-я, в аргументс приходят данные
+    function movieGrid(data) {  // специальная ф-я, в аргументс приходят данные (это 3-ий параметр SUCCESS из $.ajax запросы, который мы занесли в ф-ю CallApi
         // занести в storage.ArticleList
 
        // storage.ArticleList = data["results"];
@@ -74,7 +78,29 @@ var storage = {
             var cutString = storage.ArticleList[i].overview.slice(0, 200);
             storage.ArticleList[i].overview = cutString.slice(0, cutString.lastIndexOf('.')) + '.';
 
-            resultHtml.append("<div class=\"result col-12 col-sm-12 col-md-9 col-lg-3\" resourceId=\"" + storage.ArticleList[i]["id"] + "\">" + "<div class=\"card movie-card\">" + "<div class=\"rowMovieDiv row no-gutters\">" + "<div class=\"imgDiv\">" + "<img src=\"" + image + "\" class=\"poster img-fluid \" style=\" \"/>" + "<div class=\"overlayPoster\"><div class =\"card-body\"><h4 class=\"card-title\"><a>" + storage.ArticleList[i]["title"] + "</a></h4><p>" + storage.ArticleList[i]["overview"] + "</p><p class=\"card-footer\">More info</p></div></div></div></div></div></div>");
+            resultHtml.append(
+                "<div class=\"result col-12 col-sm-12 col-md-9 col-lg-3\" resourceId=\"" + storage.ArticleList[i]["id"] + "\">"
+                + "<div class=\"card movie-card\">"
+                    + "<div class=\"rowMovieDiv row no-gutters\">"
+                        + "<div class=\"imgDiv\">"
+                        + "<img src=\"" + image + "\" class=\"poster img-fluid \"/>"
+                        + "<div class=\"overlayPoster\">"
+                        + "<div class =\"card-body\">"
+                            + "<h4 class=\"card-title\">"
+                                +"<a>" + storage.ArticleList[i]["title"]
+                                + "</a>"
+                            +"</h4>"
+                            +"<p>" + storage.ArticleList[i]["overview"]
+                            + "</p>"
+                            + "<p class=\"card-footer\" >"
+                                + "<button class =\"moreInfo\" id=\"" + storage.ArticleList[i]["id"] +  "\">More info</button>"
+                            + "</p>"
+                        + "</div>"
+                        + "</div>"
+                        +  "</div>"
+                        + "</div>"
+                    +  "</div>"
+                +   "</div>");
         }
 
         resultHtml.append("</div>");
@@ -126,126 +152,62 @@ var storage = {
     });
 
 
+$(document).on('click', ".moreInfo", function (e) {
+
+    $('#list').hide();
+    $('#listM').hide();
+    storage.movieIdClicked=this.id;
+
+    $('#movieBackground').show();
+    // Mivie List call
+    CallAPI("movie/"+ storage.movieIdClicked, "", movieAbout , errorFunc); //API request for movie list
+
+    //	https://api.themoviedb.org/3/movie/372058?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US
+});
 
 
 
+$(document).on('click', "#back", function (e) {
+
+    $('#movieBackground').hide();
+    $('#listM').show();
+
+    CallAPI('movie/top_rated', '&page='+ storage.current_page, movieGrid, errorFunc);
+    // }
+});
 
 
-// -----------------------------------------------------------------------------
-//
-// function searchMovie () {
-//     return fetch(
-//         "https://api.themoviedb.org/3/search/movie?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US&page=1&include_adult=false&query=" + input.value,
-//         {
-//             method: "GET"
-//         }
-//     ).then(function(res) { return res.json()})
-// }
-// ///movie/top_rated API
-//
-// // -------------------------- Sarch Movies ---------------------------------------------------------
-// var input = document.getElementById("searchMovie");
-//
-// input.oninput = function() {
-//     clearSearch("searchList");
-//     searchMovie()
-//         .then(function(res) {
-//             console.log(res);
-//             storage.movieList = res.results;
-//             searchList.appendChild(MovieList())
-//         })
-// };
-//
-//
-// function clearSearch(el){
-//     document.getElementById(el).innerHTML = "";
-// }
-//
-// function MovieList () {
-//     var div = document.createElement("div");
-//     div.className = "MovieList";
-//     if (input.value) {
-//         storage.movieList.forEach(function (item) {
-//             div.appendChild(ItemMovieFromList(item));
-//         })
-//     }
-//     return div
-// }
-//
-// function ItemMovieFromList(data) {
-//     var searchList = document.createElement("div");
-//
-//     var searchListUl = document.createElement("ul");
-//     var searchListLi = document.createElement("li");
-//
-//
-//     var aSearch = document.createElement("a");
-//
-//
-//
-//     searchList.className = "col-12 col-sm-12 col-md-8 input-group ";
-//
-//     searchListUl.className = "suggests-component";
-//
-//
-//
-//
-//     aSearch.className = "ItemMovieFromSearchList";
-//     aSearch.innerText = data.title;
-//
-//
-//     searchList.appendChild(searchListUl);
-//     searchListUl.appendChild(aSearch);
-//     aSearch.appendChild(searchListLi);
-//     var idMovie = data.id;
-//     aSearch.id = idMovie;
-//
-//     var id = storage.articleList.id;
-//     // a.addEventListener("click",         // ссылка чистит
-//     //     (function(){clearList("movie")})
-//     // );
-//     aSearch.addEventListener("click",
-//         (function(){clearList("articleList")})
-//     );
-//     aSearch.addEventListener("click",
-//         (function(){clearList("searchList")})
-//     );
-//     aSearch.addEventListener("click",
-//         (function(){clearList("searchMovie")})
-//     );
-//     aSearch.addEventListener("click",
-//
-//         (function() {
-//             // storage.movieIdClicked = this.backdrop_path.substring(1);
-//             storage.movieIdClicked = this.id;
-//             console.log(storage.movieIdClicked);
-//             console.log(storage.movieItem)
-//         })
-//
-//     );
-//
-//     aSearch.addEventListener("click",
-//         renderMovie
-//     );
-//     aSearch.addEventListener("click",
-//         storage.storageRun
-//     );
-//
-//     return searchList
-// }
-//
-// function renderMovie () {
-//     //  getTopMovie ()
-//     getData("movie/"+ storage.movieIdClicked, "")
-//         .then(function(resM) {
-//             return resM.json()
-//         })
-//         .then(function(resM) {
-//             storage.movieItem = resM;
-//             //console.log(storage.movieItem.title)
-//             console.log(storage.movieItem);
-//             console.log(storage.articleList);
-//             MovieItem()
-//         })
-//
-// }
+
+function movieAbout(data) {  // специальная ф-я, в аргументс приходят данные
+
+    storage.movieItem = data; // add new object to existing array
+            var image = storage.movieItem["poster_path"] == null ? "Image/no-image.png" :  storage.imgUrl + storage.movieItem["poster_path"];
+    var imageBackground =  storage.movieItem["backdrop_path"];
+    storage.movieBackground.style.display = 'block';
+    storage.movieBackground.style.background = `url('https://image.tmdb.org/t/p/w500${imageBackground}') no-repeat`;
+    storage.movieBackground.style.backgroundSize = "cover";
+
+    var resultHtml = $(
+
+        "<div class=\"container\">"
+    + " <div class=\"row\" id=\"movie\">"
+    + " <div class=\"col-12 col-sm-12 col-md-12 col-lg-12 my-3\">"
+    + "<button id=\"back\" class=\"btn btn-outline-info my-2 my-sm-0\">Back to Movie List</button>"
+    + "</div>"
+    + "<div class=\"col-12 col-sm-4 col-md-4 col-lg-5 col-xl-4\">"
+    + "<img class=\"imgAboutSrc\" src=\"" + image +"\">"
+    + "</div>"
+    + "<div class=\"col-12 col-sm-8 col-md-8 col-lg-7 col-xl-8 d-flex flex-column \">"
+    + "<h4 class=\"card-title\">" + storage.movieItem["title"] +  "</h4> "
+    + "<p> "
+    + storage.movieItem["overview"]
+    + "</p>"
+    + "</div>"
+       + "</div>"
+       + "</div>");
+
+    $("#aboutMovie").html(resultHtml);
+}
+
+
+
