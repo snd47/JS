@@ -13,20 +13,26 @@
 <body>
 <header>
     <div class="container">
-        <div class="row my-4">
-            <div class="col-7 headerSearchName">
+        <div class="row justify-content-end">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 lang ">
+                <button  type="button" class="Lang btn btn-warning">RU</button>
+                <button  type="button" class="Lang btn btn-warning">ENG</button>
+            </div>
+               
+        </div>
+        <!--             next row                -->
+        <div class="row my-7">
+            <div class="col-md-7 headerSearchName">
                 Поиск фильмов по названию
             </div>
-            <div class="col-5">
+            <div class="col-md-5">
                 <div class="input-group mb-3">
                     <input id="searchMovie" class="form-control" type="text" name = 'keyword-input' value = ''/>
                 </div>
                 <div id="searchList">
-
                 </div>
             </div>
-
-
         </div>
     </div>
 </header>

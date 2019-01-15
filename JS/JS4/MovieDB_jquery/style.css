@@ -10,7 +10,14 @@ header {
     background-color: #081c24;
     width: 100%;
     z-index: 999;
-    height: 100px;
+    height: 110px;
+}
+
+.lang {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*color: orange;*/
+    text-align: end;
 }
 .headerSearchName {
     font-size: 18px;
@@ -20,7 +27,8 @@ header {
 
 #listM {
 
-    margin-top: 134px
+    margin-top: 110px;
+
 }
 .imgDiv {
     width: 100%;

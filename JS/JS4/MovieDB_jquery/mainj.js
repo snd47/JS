@@ -3,7 +3,8 @@
 //Storage
 var storage = {
     url: "https://api.themoviedb.org/3/",
-    key: '?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US',
+    currentLang: "en-US",
+    key: '?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=',
     imgUrl: "https://image.tmdb.org/t/p/w500/",
     ArticleList: [],         // Список фильмов для стартовой страницы, data.result
     total_pages: '',
@@ -22,6 +23,7 @@ var storage = {
         // var validate = Validate();
         // $("#listM").html(validate);
         // if (validate.length == 0) {
+        $('#movieBackground').hide();
             CallAPI('movie/top_rated', '&page='+ storage.current_page, movieGrid, errorFunc);
         // }
     });
@@ -49,17 +51,19 @@ $(window).scroll(function() {
 });
 //https://api.themoviedb.org/3/search/movie?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US&page=1&include_adult=false&query=" + input.value
 
-
+    console.log(storage.key);
 
     function CallAPI( apiName, settings, success, error ) { // в success подставляем movieGrid, а дальше другую ф-ю(movieList)
         $.ajax({
-            url: storage.url + apiName + storage.key + settings, // подставляем данные из storage и
+            url: storage.url + apiName + storage.key + storage.currentLang + settings, // подставляем данные из storage ; добавили currentLang
             // url: "https://api.themoviedb.org/3/movie/top_rated?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US&page=" + page,
             dataType: "json", // .then
             success: success, // .then
             error: error
         });
     }
+
+
 
     function movieGrid(data) {  // специальная ф-я, в аргументс приходят данные (это 3-ий параметр SUCCESS из $.ajax запросы, который мы занесли в ф-ю CallApi
         // занести в storage.ArticleList
@@ -70,7 +74,7 @@ $(window).scroll(function() {
         storage.ArticleList = storage.ArticleList.concat( data["results"]); // add new object to existing array
 
 
-        var resultHtml = $("<div class=\"row\" id=\"articleList\">");
+        var resultHtml = $("<div class=\"row pt-3\" id=\"articleList\">");
         for (var i = 0; i < storage.ArticleList.length; i++) {
 
             var image = storage.ArticleList[i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + storage.ArticleList[i]["poster_path"];
@@ -151,10 +155,28 @@ $(window).scroll(function() {
 
     });
 
+$(document).on('click', ".Lang", function (e) {
+    $('#movieBackground').hide();
+    $('#listM').show();
+    $('#listM').empty();
+    storage.ArticleList= [];
+    // storage.movieIdClicked=this.id;
+        if (storage.currentLang == "en-US") {
+            // $('#movieBackground').show();
+            // Mivie List call
+            storage.currentLang = "ru-RU"
+
+        } else  {
+            storage.currentLang = "en-US"
+        }
+    CallAPI('movie/top_rated', '&page=' + storage.current_page, movieGrid, errorFunc); //API request for movie list
+    //	https://api.themoviedb.org/3/movie/372058?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US
+});
+
+// --------------------------------------------------------------------------------------------
 
 $(document).on('click', ".moreInfo", function (e) {
 
-    $('#list').hide();
     $('#listM').hide();
     storage.movieIdClicked=this.id;
 
