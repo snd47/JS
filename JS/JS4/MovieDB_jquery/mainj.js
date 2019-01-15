@@ -4,6 +4,7 @@
 var storage = {
     url: "https://api.themoviedb.org/3/",
     currentLang: "en-US",
+    currentApi: "Grid",
     key: '?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=',
     imgUrl: "https://image.tmdb.org/t/p/w500/",
     ArticleList: [],         // Список фильмов для стартовой страницы, data.result
@@ -39,7 +40,7 @@ $(window).scroll(function() {
 
         // console.log('offset = ' + offset);
         // console.log('height = ' + height);
-
+        storage.currentApi = "Grid";
         if (offset === height) {
 
             storage.current_page++
@@ -126,15 +127,7 @@ $(window).scroll(function() {
         return errorMessage;
     }
 
-    function Paging(totalPage) {
-        var obj = $("#pagination").twbsPagination({
-            totalPages: totalPage,
-            visiblePages: 5,
-            onPageClick: function onPageClick(event, page) {
-                CallAPI(page);
-            }
-        });
-    }
+
     $(document).ajaxStart(function () {
         $(".loader img").show();
     });
@@ -159,6 +152,7 @@ $(document).on('click', ".Lang", function (e) {
     $('#movieBackground').hide();
     $('#listM').show();
     $('#listM').empty();
+
     storage.ArticleList= [];
     // storage.movieIdClicked=this.id;
         if (storage.currentLang == "en-US") {
@@ -169,14 +163,25 @@ $(document).on('click', ".Lang", function (e) {
         } else  {
             storage.currentLang = "en-US"
         }
-    CallAPI('movie/top_rated', '&page=' + storage.current_page, movieGrid, errorFunc); //API request for movie list
-    //	https://api.themoviedb.org/3/movie/372058?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US
+        if (storage.currentApi == "Grid") {
+        CallAPI('movie/top_rated', '&page=' + storage.current_page, movieGrid, errorFunc); //API request for movie list
+        //	https://api.themoviedb.org/3/movie/372058?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US
+
+        }
+        // else if (storage.currentApi == "About")
+        else
+        {
+            CallAPI("movie/"+ storage.movieIdClicked, "", movieAbout , errorFunc);
+        }
+
+
+
 });
 
 // --------------------------------------------------------------------------------------------
 
 $(document).on('click', ".moreInfo", function (e) {
-
+    storage.currentApi = "About";
     $('#listM').hide();
     storage.movieIdClicked=this.id;
 
@@ -190,7 +195,7 @@ $(document).on('click', ".moreInfo", function (e) {
 
 
 $(document).on('click', "#back", function (e) {
-
+    storage.currentApi = "Grid";
     $('#movieBackground').hide();
     $('#listM').show();
 
@@ -206,7 +211,7 @@ function movieAbout(data) {  // специальная ф-я, в аргумен�
             var image = storage.movieItem["poster_path"] == null ? "Image/no-image.png" :  storage.imgUrl + storage.movieItem["poster_path"];
     var imageBackground =  storage.movieItem["backdrop_path"];
     storage.movieBackground.style.display = 'block';
-    storage.movieBackground.style.background = `url('https://image.tmdb.org/t/p/w500${imageBackground}') no-repeat`;
+    storage.movieBackground.style.background = "url('https://image.tmdb.org/t/p/w500" + imageBackground +"') no-repeat";
     storage.movieBackground.style.backgroundSize = "cover";
 
     var resultHtml = $(

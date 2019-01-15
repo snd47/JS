@@ -13,6 +13,13 @@ header {
     height: 110px;
 }
 
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -60px 0 0 -60px;
+}
+
 .lang {
     margin-top: 10px;
     margin-bottom: 10px;
