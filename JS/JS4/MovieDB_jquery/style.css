@@ -32,6 +32,25 @@ header {
     color: #f0f8ff;
 }
 
+
+.search {
+    color: #fff;
+}
+
+.searchHover:hover{
+    background-color: #ffc107;
+    border-color: #ffeeba;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+}
+
+.searchHover:hover a{
+    color: #000;
+    text-decoration: none;
+}
+
 #listM {
 
     margin-top: 110px;
@@ -169,4 +188,51 @@ img.poster {
     margin-right: 15px;
     font-size: 16px;
     color: #f0f8ff!important;
+}
+/*------------карусель карусель карусель ---------------------*/
+.carousel  {
+    /*max-width: 1080px; !* ширина всего блока *!*/
+    margin: 120px auto;
+    width:100%;
+    /*margin-top: 150px;*/
+}
+.carousel-wrapper {
+    margin: 10px 30px; /* отступы для стрелок */
+    overflow: hidden; /* скрываем содержимое, выходящее за рамки основной области */
+    position:relative;
+}
+.carousel-items {
+    width: 10000px; /* устанавливаем большую ширину для набора элементов */
+    position: relative; /* позиционируем блок относительно основной области карусели */
+}
+.carousel-block {
+    float: left; /* выстраиваем все элементы карусели в ряд */
+    width: 250px; /* задаём ширину каждого элемента */
+    padding: 10px 10px 10px 0px; /* делаем оступы, чтобы элементы не сливались */
+}
+.carousel-block img{
+    display:block;
+}
+
+/*********** BUTTONS ***********/
+.carousel-button-left a, .carousel-button-right a{
+    width: 64px;
+    height: 64px;
+    position: relative;
+    top: 80px;
+    cursor: pointer;
+    text-decoration:none;
+}
+.carousel-button-left a{
+    float: left;
+    background: url(img/left-arrow-64.png) no-repeat;
+}
+.carousel-button-right a{
+    float: right;
+    background: url(img/right-arrow-64.png) no-repeat;
+}
+
+/*********** SHADOW ***********/
+.shadow{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
 }
