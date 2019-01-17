@@ -370,24 +370,20 @@ $(document).on('keyup paste', "input", function () {
 // --------  Search function ---------------------------
 
 function searchList(data) {  // специальная ф-я, в аргументс приходят данные (это 3-ий параметр SUCCESS из $.ajax запросы, который мы занесли в ф-ю CallApi
-    // занести в storage.ArticleList
-
     // storage.ArticleList = data["results"];
-
-    console.log(storage.ArticleList);
     storage.movieList =  data["results"]; // add new object to existing array
-
+    // console.log(storage.movieList);
 
     var resultHtml = $("<div class=\"MovieList\" >");
     resultHtml.append("<div class=\"col-12 col-sm-12 col-md-8 input-group\" >");
 
 
-    for (var i = 0; i < storage.ArticleList.length; i++) {
+    for (var i = 0; i < storage.movieList.length; i++) {
 
-        var image = storage.ArticleList[i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + storage.ArticleList[i]["poster_path"];
+        var image = storage.movieList[i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + storage.ArticleList[i]["poster_path"];
 
-        var cutString = storage.ArticleList[i].overview.slice(0, 200);
-        storage.ArticleList[i].overview = cutString.slice(0, cutString.lastIndexOf('.')) + '.';
+        var cutString = storage.movieList[i].overview.slice(0, 200);
+        storage.movieList[i].overview = cutString.slice(0, cutString.lastIndexOf('.')) + '.';
 
         resultHtml.append(
             "<div class=\"col-12  input-group \" >"
@@ -398,8 +394,8 @@ function searchList(data) {  // специальная ф-я, в аргумен�
             // + "<div class=\"overlayPoster\">"
             // + "<div class =\"card-body\">"
             // + "<h4 class=\"card-title\">"
-            +" <div class=\"searchHover\" role=\"alert\">"
-            +         "<a href='#' class='moreInfo search' id='" + storage.ArticleList[i]['id'] +       "'>"       + storage.ArticleList[i]["title"]     + "</a>"
+            +"<div class=\"searchHover\" role=\"alert\">"
+            +         "<a href='#' class='moreInfo search' id='" + storage.movieList[i]['id'] +       "'>"       + storage.movieList[i]["title"]     + "</a>"
             + "</div>"
 
             // +"</h4>"
