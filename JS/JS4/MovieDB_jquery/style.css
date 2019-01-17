@@ -155,35 +155,7 @@ img.poster {
     width: 100%;
 }
 
-.icons {
-    margin: 0px 0px 30px 100px;
-    height: 100px;
-}
 
-.rating {
-    width: 70px;
-    position: absolute;
-    top: 220px;
-    left: 41%;
-}
-.ratingText {
-    margin-top: 30px;
-    width:100px;
-    font-weight: 700;
-    font-size: smaller;
-}
-.score-circle {
-    stroke: #17a2b8;
-    transition: stroke-dashoffset 1s ease-out
-}
-.score-empty {
-    stroke: #081c24
-}
-.score-text {
-    fill: #f0f8ff!important;
-    font: bold 4rem "Poppins", Helvetica, Arial, sans-serif;
-    font-size: 7em;
-}
 .genre {
     margin-right: 15px;
     font-size: 16px;
@@ -236,3 +208,51 @@ img.poster {
 .shadow{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
 }
+
+/*+++++++++++++++++++++++++ SVG+++++++++++++++++*/
+.icons {
+    margin: 0px 0px 0px 30px;
+    height: 100px;
+}
+.rating {
+    width: 70px;
+    float: left;
+}
+.ratingText {
+    margin: 20px 0px 30px 30px;
+    width:100px;
+    font-weight: 700;
+    font-size: smaller;
+    float: left;
+}
+.score {
+    width:80px;
+    height:80px;
+}
+
+.score-circle {
+    stroke: #17a2b8;
+    transition: stroke-dashoffset 1s ease-out;
+}
+.score-empty {
+    stroke: #081c24;
+    stroke-width: 55px;
+    fill: none;
+}
+#js-circle{
+    /*transform: rotate(-90deg);*/
+    /*transform-origin: 38% 42%;*/
+    stroke-width: 55px;
+    stroke-dasharray: 1100px;
+    stroke-dashoffset: 1100px;
+    fill: none;
+    /*stroke-dashoffset: 33px;*/
+
+}
+.score-text {
+    fill: #f0f8ff!important;
+    font: bold 4rem "Poppins", Helvetica, Arial, sans-serif;
+    font-size: 7em;
+}
+
+/*+++++++++++++++++++++++++ END SVG+++++++++++++++++*/

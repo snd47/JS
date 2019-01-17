@@ -265,7 +265,13 @@ function movieSimilar(data) {
     function movieAbout(data) {  // специальная ф-я, в аргументс приходят данные
 
     storage.movieItem = data; // add new object to existing array
-            var image = storage.movieItem["poster_path"] == null ? "Image/no-image.png" :  storage.imgUrl + storage.movieItem["poster_path"];
+        console.log(storage.movieItem);
+
+
+        // -------------------------- формируем страницу о фильме -------------------------------------
+
+
+        var image = storage.movieItem["poster_path"] == null ? "Image/no-image.png" :  storage.imgUrl + storage.movieItem["poster_path"];
     var imageBackground =  storage.movieItem["backdrop_path"];
     storage.movieBackground.style.display = 'block';
     storage.movieBackground.style.background = "url('https://image.tmdb.org/t/p/w500" + imageBackground +"') no-repeat";
@@ -283,9 +289,12 @@ function movieSimilar(data) {
     + "</div>"
     + "<div class=\"col-12 col-sm-8 col-md-8 col-lg-7 col-xl-8 d-flex flex-column \">"
     + "<h4 class=\"card-title\">" + storage.movieItem["title"] +  "</h4> "
+        + "<div id='icons'></div>"
     + "<p> "
     + storage.movieItem["overview"]
     + "</p>"
+        + "<div id='genres'></div>"
+       + "<div id='release'></div>"
     + "</div>"
        + "</div>"
        + "</div>"
@@ -293,8 +302,71 @@ function movieSimilar(data) {
         +"<div class=\"carousel shadow\"><div class=\"carousel-button-left\"><a href=\"#\"></a></div><div class=\"carousel-button-right\"><a href=\"#\"></a></div><div class=\"carousel-wrapper\">"
         + "</div></div></div>"
     );
+        // ------------------------- жанры -------------------------------------
+
+        var genres = $("<ul>");
+        for (var i = 0; i < storage.movieItem.genres.length; i++) {
+            genres.append(
+                "<li id='"    + storage.movieItem.genres[i]["id"] +"' class='genre badge badge-info'>" + storage.movieItem.genres[i]["name"] + "</li>"
+            )
+        }
+        genres.append("</ul>");
+        // ------------------------- дата выхода -------------------------------------
+        var releaseHTML = $("<div>");
+        releaseHTML.append(
+            "<div  class='text-light font-size-1.2em'>Дата релиза: <span class='font-weight-bold'>" + storage.movieItem.release_date + "</span>" +
+            "</div>"
+        );
+
+
+        // -------------------------- svg -------------------------------------
+
+
+
+        var svgRating = $("<div id=\"ratingAll \">");
+        svgRating.append(
+            "<div class=\"rating \"><svg class='score' viewBox='-25 -25 450 400'>" +
+            "<circle class='score-empty' cx='175' cy='175' r='175'> </circle>" +
+            "<circle id='js-circle' class='js-circle score-circle' transform='rotate(-90 175 175)' cx='175' cy='175' r='175' style='stroke-dashoffset: 154;'></circle>" +
+            "<text id='score-rating' class='js-text score-text' x='49%' y='51%' dx='-25' text-anchor='middle'></text></svg>" +
+            "</div>" +
+            "</div>" +
+            "<div class='ratingText'>Рейтинг пользователя</div>"
+    );
+
+    // <div class="icons "><div class="rating"><svg class="score" viewBox="-25 -25 450 400"><circle class="score-empty" cx="175" cy="175" r="175"> </circle><circle id="js-circle" class="js-circle score-circle" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" style="stroke-dashoffset: 154;"></circle><text id="score-rating" class="js-text score-text" x="49%" y="51%" dx="-25" text-anchor="middle">86%</text></svg></div></div><div class="ratingText">Рейтинг пользователя</div>
 
     $("#aboutMovie").html(resultHtml);
+        $("#icons").html(svgRating);
+        $("#genres").html(genres);
+        $("#release").html(releaseHTML); // первое значение куда поместить, второе что именно(созданную переменную с HTML)
+
+        var button = document.querySelector("js-button");
+        var circle = document.getElementById("js-circle");
+        var text = document.getElementById("score-rating");
+
+
+// Circle radius, diameter and offset function
+
+        var radius = circle.getAttribute("r");
+        var diameter = Math.round(Math.PI * radius * 2);
+        var getOffset = (val = 0) => Math.round((100 - val) / 100 * diameter);
+
+
+// Generate random number and set offset and percentage
+        var val = storage.movieItem.vote_average*10;
+        console.log(val);
+        var run = () => {
+            // const val = Math.floor(Math.random() * 100)
+            circle.style.strokeDashoffset = getOffset(val);
+            text.textContent = `${val}%`
+        };
+        run();
+// storage.storageRun = run;
+// Event listeners
+
+        // button.addEventListener("click", run);
+        document.addEventListener("DOMContentLoaded", () => setTimeout(run, 10))
 }
 // ------------------------------------- карусель -----------------------------------
 $(document).on('click', ".carousel-button-right",function(){
@@ -416,6 +488,11 @@ function searchList(data) {  // специальная ф-я, в аргумен�
 
 
     $("#searchList").html(resultHtml);
+
+    // Прячем выпадающий список
+    $("#searchList").mouseleave(function(){
+        $('.MovieList').hide();
+    });
 
     //Paging(result["total_pages"]);
 }
