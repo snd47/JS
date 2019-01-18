@@ -17,7 +17,16 @@ var storage = {
     movieItem: {},          // данные о конкретном фильме, которые в ответе на запрос с id фильма
     movieSimilar: {},
     list: document.getElementById('listM'),
-    movieBackground: document.getElementById('movieBackground')
+    movieBackground: document.getElementById('movieBackground'),
+
+    // en: [["Search movies by title"], ["More info"], [ "Users' rating"], ["Release date"], ["Back to Movie List "], [], ],
+    // en: [{0:"Search movies by title"}, {1:"More info"}, {2: "Users' rating"}, {3:"Release date"}, {4:"Back to Movie List "}, {}, ],
+
+    en: {"title":"Search movies by title","info":"More info","rating": "Users' rating","release":"Release date","back":"Back to Movie List "},
+
+    // ru: [{0:"Поиск фильмов по названию"}, {1:"Подробнее"}, {2: "Рейтинг пользователя"}, {3:"Дата релиза"}, {4:"Обратно к списку фильмов"}, {}, ],
+    // ru: ["Поиск фильмов по названию","Подробнее","Рейтинг пользователя", "Дата релиза", "Обратно к списку фильмов" ],
+    ru: {"title":"Поиск фильмов по названию", "info":"Подробнее","rating": "Рейтинг пользователя", "release":"Дата релиза", "back":"Обратно к списку фильмов" }
 };
 
      // функция запустится, как только DOM полностью загрузится
@@ -28,10 +37,17 @@ var storage = {
         $('#movieBackground').hide();
             CallAPI('movie/top_rated', '&page='+ storage.current_page, movieGrid, errorFunc);
         // }
+
     });
 // ------------------------- --------------------------------------------------------------------------------------
 
-
+function translation(n){
+    if ( storage.currentLang === "en-US") {
+        return storage.en[n]
+        // return storage.en[n][n]
+    }
+    else {return storage.ru[n] }
+}
 
 
 $(window).scroll(function() {
@@ -67,8 +83,6 @@ $(window).scroll(function() {
         });
     }
 
-
-
     function movieGrid(data) {  // специальная ф-я, в аргументс приходят данные (это 3-ий параметр SUCCESS из $.ajax запросы, который мы занесли в ф-ю CallApi
         // занести в storage.ArticleList
 
@@ -101,7 +115,7 @@ $(window).scroll(function() {
                             +"<p>" + storage.ArticleList[i]["overview"]
                             + "</p>"
                             + "<p class=\"card-footer\" >"
-                                + "<button class =\"moreInfo\" id=\"" + storage.ArticleList[i]["id"] +  "\">More info</button>"
+                                + "<button class =\"moreInfo\" id=\"" + storage.ArticleList[i]["id"] +  "\">"+translation("info")+"</button>"
                             + "</p>"
                         + "</div>"
                         + "</div>"
@@ -155,16 +169,17 @@ $(document).on('click', ".Lang", function (e) {
     $('#movieBackground').hide();
     $('#listM').show().empty();
     // $('#listM').empty();
-
+    var text = document.querySelector(".headerSearchName");
     storage.ArticleList= [];
     // storage.movieIdClicked=this.id;
         if (storage.currentLang === "en-US") {
             // $('#movieBackground').show();
             // Mivie List call
-            storage.currentLang = "ru-RU"
-
+            storage.currentLang = "ru-RU";
+            text.textContent = `${storage.ru.title}`
         } else  {
-            storage.currentLang = "en-US"
+            storage.currentLang = "en-US";
+            text.textContent = `${storage.en.title}`
         }
         if (storage.currentApi === "Grid") {
         CallAPI('movie/top_rated', '&page=' + storage.current_page, movieGrid, errorFunc); //API request for movie list
@@ -176,7 +191,6 @@ $(document).on('click', ".Lang", function (e) {
         {
             moviePage();//API request for movie list
         }
-
 
 
 });
@@ -282,7 +296,7 @@ function movieSimilar(data) {
         "<div class=\"container\">"
     + " <div class=\"row\" id=\"movie\">"
     + " <div class=\"col-12 col-sm-12 col-md-12 col-lg-12 my-3\">"
-    + "<button id=\"back\" class=\"btn btn-outline-warning my-2 my-sm-0\">Back to Movie List</button>"
+    + "<button id=\"back\" class=\"btn btn-outline-warning my-2 my-sm-0\">"+translation("back")+"</button>"
     + "</div>"
     + "<div class=\"col-12 col-sm-4 col-md-4 col-lg-5 col-xl-4\">"
     + "<img class=\"imgAboutSrc\" src=\"" + image +"\">"
@@ -314,7 +328,7 @@ function movieSimilar(data) {
         // ------------------------- дата выхода -------------------------------------
         var releaseHTML = $("<div>");
         releaseHTML.append(
-            "<div  class='text-light font-size-1.2em'>Дата релиза: <span class='font-weight-bold'>" + storage.movieItem.release_date + "</span>" +
+            "<div  class='text-light font-size-1.2em'>"+ translation('release')+ ": <span class='font-weight-bold'>" + storage.movieItem.release_date + "</span>" +
             "</div>"
         );
 
@@ -331,7 +345,7 @@ function movieSimilar(data) {
             "<text id='score-rating' class='js-text score-text' x='49%' y='51%' dx='-25' text-anchor='middle'></text></svg>" +
             "</div>" +
             "</div>" +
-            "<div class='ratingText'>Рейтинг пользователя</div>"
+            "<div class='ratingText'>"+translation("rating")+"</div>"
     );
 
     // <div class="icons "><div class="rating"><svg class="score" viewBox="-25 -25 450 400"><circle class="score-empty" cx="175" cy="175" r="175"> </circle><circle id="js-circle" class="js-circle score-circle" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" style="stroke-dashoffset: 154;"></circle><text id="score-rating" class="js-text score-text" x="49%" y="51%" dx="-25" text-anchor="middle">86%</text></svg></div></div><div class="ratingText">Рейтинг пользователя</div>
@@ -361,6 +375,7 @@ function movieSimilar(data) {
             circle.style.strokeDashoffset = getOffset(val);
             text.textContent = `${val}%`
         };
+
         run();
 // storage.storageRun = run;
 // Event listeners
