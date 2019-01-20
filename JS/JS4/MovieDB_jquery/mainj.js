@@ -101,7 +101,7 @@ $(window).scroll(function() {
             storage.ArticleList[i].overview = cutString.slice(0, cutString.lastIndexOf('.')) + '.';
 
             resultHtml.append(
-                "<div class=\"result col-12 col-sm-12 col-md-9 col-lg-3\" resourceId=\"" + storage.ArticleList[i]["id"] + "\">"
+                "<div class=\"result col-12 col-sm-4 col-md-3\" resourceId=\"" + storage.ArticleList[i]["id"] + "\">"
                 + "<div class=\"card movie-card\">"
                     + "<div class=\"rowMovieDiv row no-gutters\">"
                         + "<div class=\"imgDiv\">"
@@ -165,7 +165,7 @@ $(window).scroll(function() {
 
     });
 
-$(document).on('click', ".Lang", function (e) {
+$(document).on('click', ".Lang", function () {
     $('#movieBackground').hide();
     $('#listM').show().empty();
     // $('#listM').empty();
@@ -176,10 +176,10 @@ $(document).on('click', ".Lang", function (e) {
             // $('#movieBackground').show();
             // Mivie List call
             storage.currentLang = "ru-RU";
-            text.textContent = `${storage.ru.title}`
+            text.textContent = storage.ru.title
         } else  {
             storage.currentLang = "en-US";
-            text.textContent = `${storage.en.title}`
+            text.textContent = storage.en.title
         }
         if (storage.currentApi === "Grid") {
         CallAPI('movie/top_rated', '&page=' + storage.current_page, movieGrid, errorFunc); //API request for movie list
@@ -200,6 +200,7 @@ function moviePage() {
 
     //	https://api.themoviedb.org/3/movie/372058?api_key=1078453dc71a614c3a03d74c27fbdcb1&language=en-US
     CallAPI("movie/"+ storage.movieIdClicked + "/similar", "", movieSimilar , errorFunc); //API request for movie list
+	// CallAPI("movie/"+ storage.movieIdClicked + "/credits", "", movieSimilar , errorFunc); 
     //https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1
 }
 
@@ -207,7 +208,7 @@ function moviePage() {
 
 // ----------- Событие на кнопку moreInfo, открывает страницу с конкретным фильмом ------
 
-$(document).on('click', ".moreInfo", function (e) {
+$(document).on('click', ".moreInfo", function () {
     storage.currentApi = "About";
     $('#listM').hide();
     storage.movieIdClicked=this.id;
@@ -232,7 +233,7 @@ $(document).on('click', "#back", function (e) {
     // }
 });
 
-// ------- similar films -----------------------------------------
+// ------- similar films ----------------------------------------- карусель ------------------------------------
 function movieSimilar(data) {
     storage.movieSimilar = data['results']; // add new object to existing array
   var resultHtml=  $("<div class=\"carousel-items\">");
@@ -247,27 +248,7 @@ function movieSimilar(data) {
         resultHtml.append(
             "<div class=\"carousel-block\" >"
             + "<img  id='"+ storage.movieSimilar[i]["id"] +"' src='" + image + "' class='poster img-fluid moreInfo'/>"
-            // + "<div class='card movie-card'>"
-            // + "<div class='rowMovieDiv row no-gutters'>"
-            // + "<div class='imgDiv'>"
-            // + "<img src='" + image + "' class='poster img-fluid '/>"
-            // + "<div class='overlayPoster'>"
-            // + "<div class ='card-body'>"
-            // + "<h4 class='card-title'>"
-            // +"<a>" + storage.movieSimilar[i]["title"]
-            // + "</a>"
-            // +"</h4>"
-            // +"<p>" + storage.movieSimilar[i]["overview"]
-            // + "</p>"
-            // + "<p class='card-footer' >"
-            // + "<button class ='moreInfo' id='" + storage.movieSimilar[i]["id"] +  "'>More info</button>"
-            // + "</p>"
-            // + "</div>"
-            // + "</div>"
-            // +  "</div>"
-            // + "</div>"
-            // +  "</div>"
-            +   "</div>");
+                 +   "</div>");
     }
 
     resultHtml.append("</div>");
@@ -313,7 +294,8 @@ function movieSimilar(data) {
        + "</div>"
        + "</div>"
         + "<div id = 'similar'>"
-        +"<div class=\"carousel shadow\"><div class=\"carousel-button-left\"><a href=\"#\"></a></div><div class=\"carousel-button-right\"><a href=\"#\"></a></div><div class=\"carousel-wrapper\">"
+        +"<div class=\"carousel shadow\"><div class=\"carousel-button-left\"><a href=\"#\"></a></div>" +
+        "<div class=\"carousel-button-right\"><a href=\"#\"></a></div><div class=\"carousel-wrapper\">"
         + "</div></div></div>"
     );
         // ------------------------- жанры -------------------------------------
@@ -328,7 +310,7 @@ function movieSimilar(data) {
         // ------------------------- дата выхода -------------------------------------
         var releaseHTML = $("<div>");
         releaseHTML.append(
-            "<div  class='text-light font-size-1.2em'>"+ translation('release')+ ": <span class='font-weight-bold'>" + storage.movieItem.release_date + "</span>" +
+            "<div  class='text-light font-size-1.2em'><i class=\"fas fa-tv mr-1\"></i>"+ translation('release')+ ": <span class='font-weight-bold'>" + storage.movieItem.release_date + "</span>" +
             "</div>"
         );
 
@@ -355,22 +337,22 @@ function movieSimilar(data) {
         $("#genres").html(genres);
         $("#release").html(releaseHTML); // первое значение куда поместить, второе что именно(созданную переменную с HTML)
 
-        var button = document.querySelector("js-button");
-        var circle = document.getElementById("js-circle");
-        var text = document.getElementById("score-rating");
+        const button = document.querySelector("js-button");
+        const circle = document.getElementById("js-circle");
+        const text = document.getElementById("score-rating");
 
 
 // Circle radius, diameter and offset function
 
-        var radius = circle.getAttribute("r");
-        var diameter = Math.round(Math.PI * radius * 2);
-        var getOffset = (val = 0) => Math.round((100 - val) / 100 * diameter);
+        const radius = circle.getAttribute("r");
+        const diameter = Math.round(Math.PI * radius * 2);
+        const getOffset = (val = 0) => Math.round((100 - val) / 100 * diameter);
 
 
 // Generate random number and set offset and percentage
-        var val = storage.movieItem.vote_average*10;
+        let val = storage.movieItem.vote_average * 10;
         console.log(val);
-        var run = () => {
+        let run = () => {
             // const val = Math.floor(Math.random() * 100)
             circle.style.strokeDashoffset = getOffset(val);
             text.textContent = `${val}%`
@@ -425,9 +407,9 @@ function auto_right(carusel){
     }, 1000)
 }
 // Навели курсор на карусель
-$(document).on('mouseenter', '.carousel', function(){$(this).addClass('hover')})
+$(document).on('mouseenter', '.carousel', function(){$(this).addClass('hover')});
 //Убрали курсор с карусели
-$(document).on('mouseleave', '.carousel', function(){$(this).removeClass('hover')})
+$(document).on('mouseleave', '.carousel', function(){$(this).removeClass('hover')});
 
 
 // --------  Search ---------------------------
