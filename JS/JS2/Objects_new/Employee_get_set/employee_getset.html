@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+
+<script>
+    function Employee(name, sname, salary, period) {
+
+
+                // в this пишем свойства, методы
+                 var firstname = name;
+                 var lastname = sname;
+                 var ssalary = salary;
+                 var dperiod = period;
+
+
+                this.fullName = function() {
+                console.log(this.firstname + ' ' + this.lastname)
+                }
+//----- упрощаем функцию, this теперь не нужен внутри функции
+
+                this.getSalaryMulti = function() {
+                return ssalary*dperiod;
+                }
+
+// ----- get, set ----------------------------------------------
+                this.getName = function() {
+                    return firstname;
+                };
+
+                this.getSurname = function() {
+                    return lastname;
+                };
+
+                this.getSalary = function() {
+                    return ssalary;
+                };
+
+                this.getPeriod = function() {
+                    return dperiod;
+                };
+                //-------- Записываем объект в статическое-свойство-массив.
+
+                 Employee.allEmployee.push(this);
+
+                }
+                // конец --- Функция-конструктор
+
+    Employee.allEmployee  =[];
+
+
+
+    var  Petr = new Employee('Пётр', 'Боярский', 1000, 12);
+    var  Vlad = new Employee('Влад', 'Плющенко', 700, 24);
+
+    console.log(Employee.allEmployee);
+
+    console.log(Petr.getName());
+     sum2 = Petr.getSalary()+Vlad.getSalary();
+     console.log('Зарплата ' + sum2);
+
+    console.log(Petr.getSalaryMulti());
+
+</script>
+</body>
+</html>
