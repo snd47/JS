@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Currying</title>
+</head>
+<body>
+<script>
+
+// Каррирование - создание новой функции путём фиксирования аргументов существующей
+// Создадим ф-ю, которая будет прибавлять фиксированное число к заданному и ещё прибавлять 1
+    function add_fixed(x) {
+        var z=0;
+        // debugger;
+        return  function(y) { // anonymous - scope - closure - x,z
+            // debugger;
+            z++;
+            return x+y+z;  // обращение к "x" из "arguments" извне, так же как и обращение к обычной переменной "z" извне создаст замыкание
+        }
+    }
+
+    // Как и в примере с замыканием создадим новые переменные и присвоим им внутренние ф-ии
+
+    var number_increment = add_fixed(1); // присваиваем переменной внутреннюю функцию с заданым переменной-аргументом(фиксируем его)
+    var number2_increment = add_fixed(2); // зафиксируем "x = 2"
+    console.log(number_increment(3));   // зададим число
+
+    console.log(number2_increment(3));
+
+
+    // Снова вызовем эти функции и также увидим, что скрытый объект lexicalEnvironment
+    // не был уничтожен и counter z прибавил 1
+    console.log(number_increment(3));
+    console.log(number2_increment(3));
+
+
+    // Можно ещё вызвать ф-ю таким образом, но замыкания не будет
+    var last = add_fixed(1)(3);
+
+    console.log(last);
+    console.log(last);
+
+</script>
+</body>
+</html>
