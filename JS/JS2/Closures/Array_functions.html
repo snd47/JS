@@ -34,7 +34,56 @@
     myArrayFunctions[5]();      //  выводит 10...
                                 // .. все функции выводят 10 вместо 0,1,2...9
 
-    
+    // Для разнообразия создадим ф-ю main() немного по-другому, назовём main2()
+
+    function main2() {
+
+    var arrayFunctions = [];
+    for (var i = 0; i < 10; i++) {
+        arrayFunctions[i] = function() {    // наполняем массив функциями
+            return i;
+        };
+    }
+    return arrayFunctions;
+
+    }
+
+var myArrayFunctions = main2();
+
+console.log(myArrayFunctions[0]());      //  выводит 10, а должен 0
+console.log(myArrayFunctions[5]());      //  выводит 10...
+                                     // .. все функции выводят 10 вместо 0,1,2...9
+
+// Ф-ии создают замыкания и сохраняют их в массиве:
+
+//     arrayFunctions = [
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); },
+//   function () { console.log(i); }
+// ];
+
+//     arrayFunctions = [
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; },
+//   function () { return i; }
+// ];
+
+// Но замакания образуются в одном вызове ф-ии, поэтому они получают доступ к одной и той же переменной i, и когда цикл отработает
+// main() вернёт управление, значение i будет равно 10. И именно к этому значению мы обратимся потом через console.log.
 
     
 
