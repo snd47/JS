@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Array_functions</title>
+</head>
+<body>
+<script>
+
+    
+    // Сделать, чтоб при помощи ф-ий main(), которая возвращает массив функций, каждая ф-я выводила свой порядковый номер. Использовать замыкание.
+
+    function main() {
+
+        var arrayFunctions = []; 
+        var count=0;               
+
+        for (var i = 0; i < 10; i++) {
+
+            var oneFunction = function() {      // одна функция
+                 count++;
+            console.log(i,count);                     // выводит свой номер и отдельный счётчик
+            };
+            arrayFunctions.push(oneFunction);    // наполняем массив функциями
+        }
+        return arrayFunctions;
+    }
+
+    var myArrayFunctions = main();
+
+    myArrayFunctions[0]();      //  выводит 10, а должен 0
+    myArrayFunctions[5]();      //  выводит 10...
+                                // .. все функции выводят 10 вместо 0,1,2...9
+
+    
+
+    
+
+</script>
+    
+</body>
+</html>
