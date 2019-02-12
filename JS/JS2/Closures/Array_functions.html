@@ -123,6 +123,28 @@ myArrayFunctions[5]();      //  выводит 5
 
 myArrayFunctions[0]();     //  "c" счётчик, будет изменятся    
 
+// ---------------- Более простое решение с помощью ES6 стандарта ----------------------
+
+// --- переделаем ф-ю main2();
+console.log("ES6:");
+
+function main2CloES6() {
+    let arrayFunctions = [];
+        for (let i = 0; i < 10; i++) {          // Область видимости у переменной объявленной через let ограничена блоком {}, 
+                                                // Примечание: здесь как и объявление цикла () так и тело создают 2 области видимости
+                                                // Т.е. можно сказать, что в данном случае скобки заменяют анонимную ф-ю
+                                                // в которую оборачивали в примере выше.
+            arrayFunctions[i] = function() {    
+                return i;
+            };
+        }
+        return arrayFunctions;
+    }
+
+var myArrayFunctions = main2CloES6();
+
+    console.log(myArrayFunctions[0]());      //  выводит 0
+    console.log(myArrayFunctions[5]());      //  выводит 5
 </script>
     
 </body>
