@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        * {
+         box-sizing: border-box;
+         background:#fff;
+        }
+
+        body {
+         padding:20px;
+         margin: 0 30px;
+         width: auto;
+         background:#cca;
+         
+       }
+     
+       .main { 
+         margin: 0 auto;
+        }
+      
+      .cube {
+         padding:10px;
+         margin: 5px;
+         width: 210px;
+         min-height: 50px;
+         background:#fdf;
+         border:1px solid black;
+         display:flex;
+         /* align-items:center; */
+         justify-content:center;
+      
+       }
+
+ 
+        </style>
+        <!-- Более простой вариант сделать через соответствующую библиотеку -->
+        <script src="masonry.pkgd.min.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="cube" style="height:135px; ">
+            block 1
+        </div>
+        <div class="cube" style="height:90px; ">
+            block 2
+        </div>
+        <div class="cube" style="height:110px;">
+            block 3
+        </div>
+        <div class="cube" style="height:150px; ">
+            block 4
+        </div>
+        <div class="cube" style="height:85px;">
+            block 5
+        </div>
+        <div class="cube" style="height:110px;">
+            block 6
+        </div>
+        <div class="cube" >
+            block 7
+        </div>
+
+<script>
+  
+    var qmain = document.querySelector('.main');
+    console.log(qmain);
+   
+    const mainWidth = qmain.style.width ='660px';
+    console.log(mainWidth);
+  
+
+var msnry = new Masonry(qmain, {
+    itemSelector:'.cube',
+    columnWidth:220
+})
+
+    
+</script>
+
+</body>
+
+
+</html>
