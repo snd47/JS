@@ -61,9 +61,10 @@
   <div class="block" style="height:110px;">
     <div class="inner">7</div>
   </div>
+  
   </div>
 <script>
-const COL_COUNT = 2;    // количество столбиков
+const COL_COUNT = 3;    // количество столбиков
 var col_heights = [];   //  создаем массив, елементами которого будут высоты
 var container = document.getElementById('block-contain'); // создаем переменную-родителя блоков
 
@@ -72,25 +73,28 @@ for (var i = 0; i < COL_COUNT; i++) {  //
 }
 
 console.log(col_heights);
-var order = 0;
+var order = 0; // зададим переменную order, будем ипользовать её как индекс массива колонок и как сss свойство
 for (var i = 0; i < container.children.length; i++) {
-  
-   	
+     	
      var shortest_column = Math.min.apply(Math, col_heights); // при равных элементах оставляет первый найденный как минимальный
-     console.log(shortest_column + "px - высота меньшей колоны блоков");
+        console.log(shortest_column + "px - высота меньшей колоны блоков");
      order = col_heights.indexOf(shortest_column);
-	    console.log(i+1 + " - номер блока ");
-      console.log(order + " - порядок, приоритет расположения");
-  
+	      console.log(i+1 + " - номер блока ");
+        console.log(order + " - порядок, приоритет расположения");
+     
+      container.children[i].style.order = order; 
+        console.log(container.children[i]);
    
-   container.children[i].style.order = order;
-   console.log(container.children[i]);
-   
-  col_heights[order] += parseFloat(container.children[i].style.height); // суммируем высоты блоков привязываясь к order
-  console.log(col_heights);
+      col_heights[order] += parseFloat(container.children[i].style.height); // суммируем высоты блоков привязываясь к order
+        console.log(col_heights);
 }
 var highest = Math.max.apply(Math, col_heights);
-container.style.height = highest+'px';  // ограничеваем высоту основного контейнера, чтоьы flex-flow: column wrap растягивал колонки в ширину
+container.style.height = highest+'px';  // ограничеваем высоту основного контейнера, чтоб flex-flow: column wrap 
+                                        // рассредоточил элементы столбиком друг за другом с новым ордером именно на заданное кол-во столбцов,
+                                        // чтоб блоки не образовывали дополнительную колонку при этом сжимаясь из-за нехватки высоты 
+ // Т.к. ширина родительского блока ограничена, а высота меняется относительно col_count, чем меньше значение которого, тем выше
+ // родительский контейнер.  Ширина же блока подгоняется относительно итоговых констант: высоты блока, ширины контейнера-родителя, 
+ // высоты контейнера-родителя . Все блоки должны будут уместится в контейнер
 </script>
 </body>
 </html>
